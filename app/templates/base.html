@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block title %}
-    {% if title %}{{ title }} - {{ _('NVH Tech') }}{% else %} {{ _('NVH Tech') }}{% endif %}
+    {% if title %}{{ title }} - {{ _('扬州大学通识教育系统') }}{% else %} {{ _('扬州大学通识教育系统') }}{% endif %}
 {% endblock %}
 
 {% block head %}
@@ -32,36 +32,37 @@
 
 
 {% block navbar %}
-    <nav class="site-header sticky-top py-1">
-        <div class="container d-flex flex-column flex-md-row justify-content-between">
-            <a class="py-2" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
-                    <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
-                    <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
-                    <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
-                    <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
-                    <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
-                </svg>
-            </a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Tour</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Product</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Features</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Enterprise</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Support</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.index')}}">{{ _('扬州大学通识教育系统') }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {{ main }}">
+                    <a class="nav-link" href="{{ url_for('main.index')}}">{{ _('首页') }}</a>
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ dashboard }}">
+                    <a class="nav-link" href="{{ url_for('dashboard.index')}}">{{ _('课程列表') }}</a>
+                </li>
+                <li class="nav-item {{ guide }}">
+                    <a class="nav-link" href="{{ url_for('guide.index')}}">{{ _('工作指南') }}</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
 {% endblock %}
+
 {%- block content %}
     {{super()}}
     <main role="main">
-        {% block app_content %}{% endblock %}
-        {%- block footer %}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
@@ -69,15 +70,17 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <footer class="container py-5">
-            <p class="float-right"><a href="#">Top</a></p>
-            <div class="d-block mb-3 text-muted">
+        
+        {% block app_content %}{% endblock %}
+        
+        {%- block footer %}
+            <hr />
+            <footer class="container">
+                <p class="float-right"><a href="#">Top</a></p>
                 <p>&copy; 2017-2018 Monius, All rights reserved. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-                </div>
             </footer>
         {%- endblock footer %}
     </main>
-
 {%- endblock content %}
 
 {% block scripts %}
