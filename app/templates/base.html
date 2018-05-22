@@ -3,10 +3,17 @@
 {% set main=main or"" %}
 {% set dashboard=dashboard or"" %}
 {% set guide=guide or"" %}
+{% set module=module or"" %}
 
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.min.css' )}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/font-awesome.min.css' )}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/font.css' )}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/lightbox.css' )}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/fontastic.css' )}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.blue.css' )}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/base.css' )}}">
+
 {% endblock %}
 
 {% block title %}
@@ -16,7 +23,7 @@
 {% block head %}
     {{super()}}
     {% block favicon %}
-        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for( 'static',filename='images/logo/base.png' )}}">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for( 'static',filename='images/logo/outter.png' )}}">
     {% endblock %}
 
     {% block meta %}
@@ -32,32 +39,43 @@
 
 
 {% block navbar %}
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.index')}}">{{ _('扬州大学通识教育系统') }}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item {{ main }}">
-                    <a class="nav-link" href="{{ url_for('main.index')}}">{{ _('首页') }}</a>
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ dashboard }}">
-                    <a class="nav-link" href="{{ url_for('dashboard.index')}}">{{ _('课程列表') }}</a>
-                </li>
-                <li class="nav-item {{ guide }}">
-                    <a class="nav-link" href="{{ url_for('guide.index')}}">{{ _('工作指南') }}</a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                    <h5>
+                        <a href="{{ url_for('main.index')}}" class="navbar-brand">
+                            <img src="{{ url_for('static',filename='images/logo/inner.svg')}}" alt="" class="img-fluid">
+                        {{ _('扬州大学通识教育系统') }}
+                        </a>
+                    </h5>
+                
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">Menu
+                    <i class="fa fa-bars ml-2"></i>
+                </button>
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Link-->
+                        <li class="nav-item {{ main }}">
+                            <a class="nav-link" href="{{ url_for('main.index')}}">{{ _('首页') }}</a>
+                            <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ module }}">
+                            <a class="nav-link" href="{{ url_for('dashboard.index')}}">{{ _('模块与课程') }}</a>
+                        </li>
+                        <li class="nav-item {{ guide }}">
+                            <a class="nav-link" href="{{ url_for('guide.index')}}">{{ _('工作指南') }}</a>
+                        </li>
+                        <li class="nav-item {{ dashboard }}">
+                            <a class="nav-link" href="{{ url_for('module.index')}}">{{ _('通识实验') }}</a>
+                        </li>
+                    </ul>
+                    <a href="#" data-toggle="modal" data-target="#login" class="btn btn-primary navbar-btn ml-0 ml-lg-3">Login </a>
+                </div>
+            </div>
+        </nav>
+    </header>
 {% endblock %}
 
 {%- block content %}
@@ -85,7 +103,10 @@
 
 {% block scripts %}
 <script src="{{ url_for( 'static',filename='js/jquery-3.3.1.min.js' )}}"></script>
-<script src="{{ url_for( 'static',filename='js/bootstrap.min.js' )}}"></script>
 <script src="{{ url_for( 'static',filename='js/popper.min.js' )}}"></script>
+<script src="{{ url_for( 'static',filename='js/bootstrap.min.js' )}}"></script>
+<script src="{{ url_for( 'static',filename='js/jquery.cookie.js' )}}"></script>
+<script src="{{ url_for( 'static',filename='js/lightbox.js' )}}"></script>
 <script src="{{ url_for( 'static',filename='js/holder.min.js' )}}"></script>
+<script src="{{ url_for( 'static',filename='js/front.js' )}}"></script>
 {% endblock %}

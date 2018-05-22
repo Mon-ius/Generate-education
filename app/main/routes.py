@@ -7,7 +7,15 @@ from app.main import bp
 
 @bp.route('/', methods=['GET', 'POST'])
 def  index():
-    return render_template('main/index.html', title=_('Home'),main='active')
+    Hight = 1920
+    Width = 800
+    # if request.method == 'GET':
+    #     Hight=request.form['Hight']
+    #     Width=request.form['Width']
+    # print(Width)
+    return render_template('main/index.html', title=_('Home'),main='active',Hight=Hight,Width=Width)
+
+
 
 
 

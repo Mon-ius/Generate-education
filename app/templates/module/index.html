@@ -1,0 +1,533 @@
+{% extends "form.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block styles %}
+{{super()}}
+{% endblock %}
+{% block app_content %}
+    <div class="container">
+        <!-- wordPress installation-->
+        <header class="section header mb-5">
+            <h2>通识实验</h2>
+            <p class="lead">扬州大学通识实验(践)训练项目选课手册</p>
+        </header>
+        <div class="row">
+            <div class="col-lg-8">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="40" bgcolor="#efefef" height="39">
+                                <p align="center">课程
+                                    <br>编号</p>
+                            </td>
+                            <td width="66" bgcolor="#efefef">
+                                <p align="center">所在学院</p>
+                            </td>
+                            <td width="113" bgcolor="#efefef">
+                                <p align="center">项目名称</p>
+                            </td>
+                            <td width="86" bgcolor="#efefef">
+                                <p align="center">任课教师</p>
+                            </td>
+                            <td width="28" bgcolor="#efefef">
+                                <p align="center">学时 </p>
+                            </td>
+                            <td valign="center" width="67" bgcolor="#efefef">
+                                <p align="center">人数</p>
+                            </td>
+
+                            <td width="79" bgcolor="#efefef">
+                                <p align="center">上课地点</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="55">
+                                <p>119004</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff" rowspan="2">
+                                <p>机械工程
+                                    <br>学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091426792.doc"
+                                        target="_blank">钳工实训操作训练</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>孔繁群
+                                    <br>13665203655</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>200人，
+                                    <br>分4个班</p>
+                            </td>
+          
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>扬子津校区
+                                    <br>机械学院
+                                    <br>实训中心</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="53">
+                                <p>119005</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091501868.doc"
+                                        target="_blank">自行车拆装</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>赵晴，
+                                    <br>李雪峰
+                                    <br>13852406677</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>8</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>20-30</p>
+                            </td>
+         
+                            
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>扬子津校区
+                                    <br>机械楼S503</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="57">
+                                <p>259003</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff" rowspan="2">
+                                <p>能源与动力工程学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091438630.doc"
+                                        target="_blank">日光灯电路安装</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>蒋步军
+                                    <br>87993860，
+                                    <br>袁如明</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>4</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30</p>
+                            </td>
+                  
+                            
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>扬子津校区
+                                    <br>能动实验室</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="58">
+                                <p>259004</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091308183.doc"
+                                        target="_blank">单相电度表的安装与使用</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>蒋步军
+                                    <br>87993860，
+                                    <br>袁如明</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>6</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30</p>
+                            </td>
+               
+                            
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>扬子津校区
+                                    <br>能动实验室</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="56">
+                                <p>009011</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>校团委</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091302625.doc"
+                                        target="_blank">大学生创新创业能力训练</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>周保垒13405552008，
+                                    <br>施林峰等</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>12</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30/班（每期2个班）</p>
+                            </td>
+                      
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>荷花池校区
+                                    <br>团委会议室</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="54">
+                                <p>269028</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>园艺与植物保护学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091405224.doc"
+                                        target="_blank">昆虫标本采集、制作与识别</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>刘芳
+                                    <br>13815802333
+                                    <br>赵明</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30</p>
+                            </td>
+                      
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>文汇路校区
+                                    <br>020100125</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="54">
+                                <p>229044</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>商学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091442958.doc"
+                                        target="_blank">商品推销方案设计和实施实践</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>潘成云
+                                    <br>87176696，
+                                    <br>杭忠东</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>人数不限</p>
+                            </td>
+                      
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>文汇路校区</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="50">
+                                <p>089005</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff" rowspan="2">
+                                <p>化学化工
+                                    <br>学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091255679.doc"
+                                        target="_blank">玻璃加工技术</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>张永才
+                                    <br>18952568061</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>4</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>80（10人/周·次</p>
+                            </td>
+                         
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>瘦西湖校区
+                                    <br>新化学楼
+                                    <br>灯工房</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="36">
+                                <p>089006</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091314252.doc"
+                                        target="_blank">稻草造纸技术</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>李增光
+                                    <br>82830123</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>20</p>
+                            </td>
+                       
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>瘦西湖校区
+                                    <br>化学馆</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="55">
+                                <p>039020</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>艺术学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091456942.doc"
+                                        target="_blank">陶艺制作</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>程佳德
+                                    <br>13013710595</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>32</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>16</p>
+                            </td>
+                       
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>瘦西湖校区
+                                    <br>文印部旁</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="38">
+                                <p>239020</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>旅游与烹饪学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091418756.doc"
+                                        target="_blank">酿酒工艺</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>杨振泉
+                                    <br>13665248836</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30</p>
+                            </td>
+                     
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>扬子津校区
+                                    <br>笃行楼S108</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="43">
+                                <p>129009</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>信息工程
+                                    <br>学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091358442.doc"
+                                        target="_blank">计算机组装与维护</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>罗家奇
+                                    <br>13092002864</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30</p>
+                            </td>
+                            
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>江阳路北校区
+                                    <br>
+                                    <font style="COLOR: #ff0000">信息工程学院</font>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="41">
+                                <p>029054</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>社会发展
+                                    <br>学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091447299.doc"
+                                        target="_blank">社会调查</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>薛平
+                                    <br>13665240660</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>6</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>30</p>
+                            </td>
+                     
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>文汇路校区</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="54">
+                                <p>079002</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>物理科学与技术学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091432422.doc"
+                                        target="_blank">趣味电子小制作</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>杨义军13013709147、
+                                    <br>钱晓英</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>16</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>40</p>
+                            </td>
+                       
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>瘦西湖校区</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="40" bgcolor="#ffffff" height="56">
+                                <p>139003</p>
+                            </td>
+                            <td align="middle" width="66" bgcolor="#ffffff">
+                                <p>水利工程
+                                    <br>学院</p>
+                            </td>
+                            <td align="middle" width="113" bgcolor="#ffffff">
+                                <div align="center">
+                                    <a style="COLOR: #ff0000" href="/module/download/downfile.jsp?classid=801&amp;filename=100925091451722.doc"
+                                        target="_blank">水泵的安装与维修</a>
+                                </div>
+                            </td>
+                            <td valign="center" align="middle" width="86" bgcolor="#ffffff">
+                                <p>周济人、
+                                    <br>何钟宁
+                                    <br>13665298855</p>
+                            </td>
+                            <td align="middle" width="28" bgcolor="#ffffff">
+                                <p>10</p>
+                            </td>
+                            <td valign="center" align="middle" width="67" bgcolor="#ffffff">
+                                <p>20人
+                                    <br>
+                                    <font style="COLOR: #ff0000">（分2期）</font>
+                                </p>
+                            </td>
+                      
+                            <td align="middle" width="79" bgcolor="#ffffff">
+                                <p>江阳路南校区
+                                    <br>工程馆</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+               
+                <!-- troubleshooting-->
+              
+            
+            </div>
+            <!-- sidebar-->
+            <aside class="sidebar col-lg-4 mt-5 mt-lg-0">
+                <div class="search mb-4">
+                    <form action="#" class="search-form">
+                        <div class="form-group">
+                            <input type="search" name="search" placeholder="Search" class="form-control">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="sidebar-widget">
+                    <h4 class="sidebar-widget-heading">精品实验</h4>
+                    <ul class="list-inline pl-0 mt-4">
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="tag-link">文化传承</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="tag-link">科技创新</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="tag-link">技术创作</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="tag-link">当代社会</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="tag-link">文明对话</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="tag-link">哲学智慧</a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+{% endblock %}
