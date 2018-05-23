@@ -1,9 +1,9 @@
 ﻿{% extends 'bootstrap/base.html' %}
 
 {% set main=main or"" %}
-{% set dashboard=dashboard or"" %}
-{% set guide=guide or"" %}
 {% set module=module or"" %}
+{% set guide=guide or"" %}
+{% set experiment=experiment or"" %}
 
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.min.css' )}}">
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block title %}
-    {% if title %}{{ title }} - {{ _('扬州大学通识教育系统') }}{% else %} {{ _('扬州大学通识教育系统') }}{% endif %}
+    {% if title %}{{ title }} - {{ _('扬州大学通识教育') }}{% else %} {{ _('扬州大学通识教育') }}{% endif %}
 {% endblock %}
 
 {% block head %}
@@ -45,7 +45,7 @@
                     <h5>
                         <a href="{{ url_for('main.index')}}" class="navbar-brand">
                             <img src="{{ url_for('static',filename='images/logo/inner.svg')}}" alt="" class="img-fluid">
-                        {{ _('扬州大学通识教育系统') }}
+                        {{ _('扬州大学通识教育') }}
                         </a>
                     </h5>
                 
@@ -61,14 +61,14 @@
                             <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ module }}">
-                            <a class="nav-link" href="{{ url_for('dashboard.index')}}">{{ _('模块与课程') }}</a>
+                        <li class="nav-item {{ experiment }}">
+                            <a class="nav-link" href="{{ url_for('module.index')}}">{{ _('模块与课程') }}</a>
                         </li>
                         <li class="nav-item {{ guide }}">
                             <a class="nav-link" href="{{ url_for('guide.index')}}">{{ _('工作指南') }}</a>
                         </li>
-                        <li class="nav-item {{ dashboard }}">
-                            <a class="nav-link" href="{{ url_for('module.index')}}">{{ _('通识实验') }}</a>
+                        <li class="nav-item {{ module }}">
+                            <a class="nav-link" href="{{ url_for('experiment.index')}}">{{ _('通识实验') }}</a>
                         </li>
                     </ul>
                     <a href="#" data-toggle="modal" data-target="#login" class="btn btn-primary navbar-btn ml-0 ml-lg-3">Login </a>

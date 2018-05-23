@@ -23,8 +23,8 @@ def create_app(config_class=Config):
     from app.guide import bp as guide_bp
     app.register_blueprint(guide_bp, url_prefix='/guide')
 
-    from app.module import bp as module_bp
-    app.register_blueprint(module_bp, url_prefix='/module')
+    from app.experiment import bp as experiment_bp
+    app.register_blueprint(experiment_bp, url_prefix='/experiment')
 
 
 
@@ -32,8 +32,8 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
 
 
-    from app.dashboard import bp as dashboard_bp
-    app.register_blueprint(dashboard_bp)
+    from app.module import bp as module_bp
+    app.register_blueprint(module_bp)
 
     return app
 
