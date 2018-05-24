@@ -5,5 +5,13 @@ from app.guide import bp
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('guide/index.html', title=_('guide'),guide='active')
+    return render_template('guide/index.html', title=_('工作指南'),guide='active')
+
+@bp.route('/contact', methods=['GET', 'POST'])
+def contact():
+    return render_template('guide/contact.html', title=_('联系我们'),guide='active')
+
+@bp.route('/success', methods=['GET', 'POST'])
+def success():
+    return render_template('guide/success.html', title=_('提交成功'),guide='active')
 

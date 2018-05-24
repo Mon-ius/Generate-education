@@ -1,0 +1,76 @@
+
+{% extends "form.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<div class="container">
+    <header class="section-header">
+        <h2 class="mb-2">填写表单</h2>
+        <p class="lead">请提供您的信息,以便于更快速解决问题</p>
+    </header>
+    <div class="row align-items-center mt-5">
+        <div class="col-lg-7">
+            <form action="#" class="contact-form text-left">
+                <div class="form-group mb-4">
+                    <label>姓名
+                        <sup class="text-primary">&#10033;</sup>
+                    </label>
+                    <input type="text" name="name" placeholder="先生/女士" class="form-control">
+                </div>
+                <div class="form-group mb-4">
+                    <label>公司邮件地址
+                        <sup class="text-primary">&#10033;</sup>
+                    </label>
+                    <input type="text" name="email" placeholder="name@company.com" class="form-control">
+                </div>
+                <div class="form-group mb-4">
+                    <label>主题
+                        <sup class="text-primary">&#10033;</sup>
+                    </label>
+                    <input type="text" name="subject" placeholder="问题概述" class="form-control">
+                </div>
+                <div class="form-group mb-4">
+                    <label>详细问题
+                        <sup class="text-primary">&#10033;</sup>
+                    </label>
+                    <textarea name="message" placeholder="具体描述一下您的问题" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <a href="{{ url_for("guide.success")}}" value="提交"  class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-5 contact-details mt-5 mt-lg-0">
+            <div class="box">
+                <div class="icon d-flex align-items-end">
+                    <img src="{{ url_for( 'static',filename='images/contact/loc.svg' )}}" alt="" class="img-fluid">
+                </div>
+                <h5>地址</h5>
+                <p class="text-small font-weight-light">江苏省扬州市大学南路88号</p>
+            </div>
+            <div class="box">
+                <div class="icon d-flex align-items-end">
+                    <img src="{{ url_for( 'static',filename='images/contact/call.svg' )}}" alt="" class="img-fluid">
+                </div>
+                <h5>电话</h5>
+                <p class="text-small font-weight-light">+86 0514-87971692</p>
+                
+            </div>
+            <div class="box">
+                <div class="icon d-flex align-items-end">
+                    <img src="{{ url_for( 'static',filename='images/contact/email.svg' )}}" alt="" class="img-fluid">
+                </div>
+                <h5>邮箱</h5>
+                <ul class="text-left">
+                    <li>
+                        <a href="mailto:jiaowu@yzu.edu.cn" class="text-small">jiaowu@yzu.edu.cn</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-small">扬州大学教务处</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+ {% endblock %}

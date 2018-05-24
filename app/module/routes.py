@@ -8,4 +8,4 @@ from functools import reduce
 @bp.route('/module', methods=['GET', 'POST'])
 def  index():
 
-    return render_template('module/index.html', title=_('module'), module='active')
+    return render_template('module/index.html', title=_('模块与课程'), module='active')

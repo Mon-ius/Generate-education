@@ -5,5 +5,5 @@ from app.experiment import bp
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('experiment/index.html', title=_('experiment'),experiment='active')
+    return render_template('experiment/index.html', title=_('通识实验'),experiment='active')
 

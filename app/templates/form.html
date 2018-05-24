@@ -10,6 +10,7 @@
 {% block content %}
     <div class='container'>
         {% block app_content %}{% endblock %}
+        {% block footer %}{{super()}} {% endblock %}
     </div>
-    {% block footer %}{{super()}} {% endblock %}
+    
 {% endblock %}

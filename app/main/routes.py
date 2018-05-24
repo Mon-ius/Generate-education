@@ -13,7 +13,7 @@ def  index():
     #     Hight=request.form['Hight']
     #     Width=request.form['Width']
     # print(Width)
-    return render_template('main/index.html', title=_('Home'),main='active',Hight=Hight,Width=Width)
+    return render_template('main/index.html', title=_('首页'),main='active',Hight=Hight,Width=Width)
 
 
 
