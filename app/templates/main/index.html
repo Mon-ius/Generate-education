@@ -30,28 +30,48 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-<br>
 <hr>
-<div class="container">
-    <div class="text-center">
-        <h2>选课须知</h2>
-        <p class="lead text-muted mt-2 text-left">
-    1.每位学生在校期间的第一学期与最后一学期不能选修，即只能在第2学期至第7或9（五年制）学期选修通识实验（践）项目。<br>
-    2.学生需通过预选、正选、补退选三个阶段确定所选项目，如果预选人数大于实际容量，需在正选时参加该项目的抽签。<br>
-    3. 学生选课后无故不参加课程的学习或考核，则取消该生之后选修资格。<br>
-    4. 通识实验（践）训练项目的成绩按“合格”、“不合格”两个等级记载。<br>
-    5. 每位学生必须完整地参加所选项目的理论与实践过程，否则不给成绩。<br>
-    6. “通识实验（践）训练项目”可作为校级公选课、任意选修课学分。<br>
-    7. 每位学生最多可选修4个项目，每学期最多选修2个项目。<br>
-    8.只有当所修具体项目学分总和大于0.5学分，经学生申请，注册中心审批后，换算成课程学分，记入学生学籍卡。低于0.5学分，则不记该门课程成绩。</p>
-        
-    </div>
-    <div class="row">
-        <div class="col-lg-7 mx-auto mt-5">
-            <img src="{{ url_for( 'static',filename='images/main/1.svg' )}}" alt="..." class="intro-image img-fluid">
+    <div class="container">
+        <div class="text-center">
+            <h2>模块与课程</h2>
+            <p class="lead text-muted mt-2">查看最热门的通识课程</p>
+            <a href="{{ url_for('module.index')}}" class="btn btn-primary">开始选课</a>
+        </div>
+        <div class="portfolio mt-5">
+            <div class="row">
+                <div class="col-lg-4 p-0">
+                    <a href="{{ url_for( 'static',filename='images/main/1.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)1" class="portfolio-item">
+                        <img src="{{ url_for( 'static',filename='images/main/1.jpg' )}}" alt="image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-4 p-0">
+                    <a href="{{ url_for( 'static',filename='images/main/4.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)2" class="portfolio-item">
+                        <img src="{{ url_for( 'static',filename='images/main/4.jpg' )}}" alt="image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-4 p-0">
+                    <a href="{{ url_for( 'static',filename='images/main/3.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)3" class="portfolio-item">
+                        <img src="{{ url_for( 'static',filename='images/main/3.jpg' )}}" alt="image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-4 p-0">
+                    <a href="{{ url_for( 'static',filename='images/main/4.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)4" class="portfolio-item">
+                        <img src="{{ url_for( 'static',filename='images/main/4.jpg' )}}" alt="image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-4 p-0">
+                    <a href="{{ url_for( 'static',filename='images/main/5.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)6" class="portfolio-item">
+                        <img src="{{ url_for( 'static',filename='images/main/5.jpg' )}}" alt="image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-4 p-0">
+                    <a href="{{ url_for( 'static',filename='images/main/6.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)6" class="portfolio-item">
+                        <img src="{{ url_for( 'static',filename='images/main/6.jpg' )}}" alt="image" class="img-fluid">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 <hr>
     <div class="container">
         <div class="text-center">
@@ -126,47 +146,27 @@
     </div>
 </div>
 <hr>
-    <div class="container">
-        <div class="text-center">
-            <h2>课程预览</h2>
-            <p class="lead text-muted mt-2">查看最热门的通识课程</p>
-            <a href="{{ url_for('module.index')}}" class="btn btn-primary">开始选课</a>
-        </div>
-        <div class="portfolio mt-5">
-            <div class="row">
-                <div class="col-lg-4 p-0">
-                    <a href="{{ url_for( 'static',filename='images/main/1.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)1" class="portfolio-item">
-                        <img src="{{ url_for( 'static',filename='images/main/1.jpg' )}}" alt="image" class="img-fluid">
-                    </a>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <a href="{{ url_for( 'static',filename='images/main/4.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)2" class="portfolio-item">
-                        <img src="{{ url_for( 'static',filename='images/main/4.jpg' )}}" alt="image" class="img-fluid">
-                    </a>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <a href="{{ url_for( 'static',filename='images/main/3.jpg' )}}"data-lightbox="image-1" data-title="课程(可改为具体名称)3" class="portfolio-item">
-                        <img src="{{ url_for( 'static',filename='images/main/3.jpg' )}}" alt="image" class="img-fluid">
-                    </a>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <a href="{{ url_for( 'static',filename='images/main/4.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)4" class="portfolio-item">
-                        <img src="{{ url_for( 'static',filename='images/main/4.jpg' )}}" alt="image" class="img-fluid">
-                    </a>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <a href="{{ url_for( 'static',filename='images/main/6.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)6" class="portfolio-item">
-                        <img src="{{ url_for( 'static',filename='images/main/6.jpg' )}}" alt="image" class="img-fluid">
-                    </a>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <a href="{{ url_for( 'static',filename='images/main/6.jpg' )}}" data-lightbox="image-1" data-title="课程(可改为具体名称)6" class="portfolio-item">
-                        <img src="{{ url_for( 'static',filename='images/main/6.jpg' )}}" alt="image" class="img-fluid">
-                    </a>
-                </div>
-            </div>
+<div class="container">
+    <div class="text-center">
+        <h2>选课须知</h2>
+        <p class="lead text-muted mt-2 text-left">
+            1.每位学生在校期间的第一学期与最后一学期不能选修，即只能在第2学期至第7或9（五年制）学期选修通识实验（践）项目。
+            <br> 2.学生需通过预选、正选、补退选三个阶段确定所选项目，如果预选人数大于实际容量，需在正选时参加该项目的抽签。
+            <br> 3. 学生选课后无故不参加课程的学习或考核，则取消该生之后选修资格。
+            <br> 4. 通识实验（践）训练项目的成绩按“合格”、“不合格”两个等级记载。
+            <br> 5. 每位学生必须完整地参加所选项目的理论与实践过程，否则不给成绩。
+            <br> 6. “通识实验（践）训练项目”可作为校级公选课、任意选修课学分。
+            <br> 7. 每位学生最多可选修4个项目，每学期最多选修2个项目。
+            <br> 8.只有当所修具体项目学分总和大于0.5学分，经学生申请，注册中心审批后，换算成课程学分，记入学生学籍卡。低于0.5学分，则不记该门课程成绩。
+        </p>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-7 mx-auto mt-5">
+            <img src="{{ url_for( 'static',filename='images/main/1.svg' )}}" alt="..." class="intro-image img-fluid">
         </div>
     </div>
+</div>
 
 {% endblock %}
 

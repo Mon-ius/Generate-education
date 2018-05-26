@@ -2,90 +2,75 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block styles %}
 {{super()}}
+<style>
+
+    .affix {
+position: sticky
+    }
+</style>
 {% endblock %}
 {% block app_content %}
     <section class="hero">
         <div class="container text-center">
             <!-- breadcrumb-->
             <h1 class="hero-heading">通识实验</h1>
-            <div class="row">
-                <div class="col-lg-7 mx-auto">
-                    <p class="lead text-muted">实验指南及相关文件</p>
-                </div>
-            </div>
         </div>
     </section>
-    <div class="container">
-        <!-- wordPress installation-->
+    <div class="bd-example">
         <h2 class="featurette-heading" id="qa_mean">
             <span class="text-muted small">实验指导</span>
         </h2>
-
         <div class="row">
-            <div class="col-lg-8">
-                <div id="accordion" class="faq accordion accordion-custom pb-5">
-                    <!-- question-->
-                    <div class="card">
-                        <div id="headingOne" class="card-header">
-                            <h4 class="mb-0 accordion-heading">
-                                <button data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="d-flex align-items-center">
-                                    <i class="icon-light-bulb"></i>
-                                    <span>扬州大学通识实验(践)训练项目选课手册</span>
-                                </button>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
-                            <div class="card-body">选课手册示例</div>
-                        </div>
-                    </div>
-                    <!-- question        -->
-                    <div class="card">
-                        <div id="headingTwo" class="card-header">
-                            <h4 class="mb-0 accordion-heading">
-                                <button data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="d-flex align-items-center collapsed">
-                                    <i class="icon-plug"></i>
-                                    <span>2015-2016学年春学期通识实验课程开课方案</span>
-                                </button>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion" class="collapse">
-                            <div class="card-body">课程方案示例</div>
-                        </div>
-                    </div>
-                    <!-- question-->
-                    <div class="card">
-                        <div id="headingThree" class="card-header">
-                            <h4 class="mb-0 accordion-heading">
-                                <button data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="d-flex align-items-center collapsed">
-                                    <i class="icon-shield-settings"></i>
-                                    <span>扬州大学通识实验（践）训练项目管理办法</span>
-                                </button>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion" class="collapse">
-                            <div class="card-body">管理办法示例</div>
-                        </div>
-                    </div>
-                    <!-- question            -->
+            <div class="col-4 ">
+                <div id="list-example" class="list-group" data-spy="affix" data-offset-top="205">
+                    <a class="list-group-item list-group-item-action active" href="#list-item-1">扬州大学通识实验(践)训练项目选课手册</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-2">2015-2016学年春学期通识实验课程开课方案</a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-3">扬州大学通识实验（践）训练项目管理办法</a>
                 </div>
-                <!-- troubleshooting-->
             </div>
-            <!-- sidebar-->
-            <aside class="sidebar col-lg-4 mt-5 mt-lg-0">
-                <div class="search mb-4">
-                    <form action="#" class="search-form">
-                        <div class="form-group">
-                            <input type="search" name="search" placeholder="手册查询" class="form-control">
-                            <button type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
+            <div class="col-8">
+                <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+                    <h4 id="list-item-1">选课手册示例</h4>
+                    <p>选课手册示例.
+为秉承立德树人的人才培养主旨，着力培养学生解决问题、发现问题的能力，提升学生的创新精神、实践能力和社会责任感，提高我校通识实验选修课程对学生的吸引力，学校对原先开设的通识实验训练项目做了一些调整，具体事项通知如下： 1. 通识实验训练项目更名为《通识实验课》，在扬子津校区开设的为《通识实验课І》（课程编号：15002008），在文汇路校区开设的为《通识实验课Ⅱ》（课程编号：15002009）；
+2. 《通识实验课І》设置为2学分，30学时，包含如下项目：（扬子津校区） （62人 序号 所在学院 项目名称 任课教师 学时 上课 地点 分组安排/每次授课学时 上课周次 对学生的要求（比如学生上课前需做什么准备、授课时的注意事项、课后要做什么等）
+1 机械工程学院 钳工实训操作训练 龚俊杰 13665292801 6 扬子津校区力行楼N302/N304 30人/组 分为A、B两组 每次3学时 A组 第2-3周 B组 第6-7周每周六上午 无 2 机械工程学院 自行车拆装 李雪峰13852406677
+6 扬子津校区力行楼S503 20人/组/3学时 第2-7周周六上午 对机械知识感兴趣，动手能力强 3 水利与能源动力工程学院 日光灯电路安装 蒋步军13615258302 袁如明 15861326635 4 知行楼 N310 每次授课人数30人（15组，每组2人），分两批开课：8点-10点和10点-12点
+第8-9周周六上午 4 水利与能源动力工程学院 单相电度表的安装与使用 蒋步军13615258302 袁如明 15861326635 2 知行楼 N310 每次授课人数30人（15组，每组2人），分两批开课：8点-10点和10点-12点 第10周
+周六上午 5 水利与能源动力工程学院 水泵的安装与维修 李正明13952755279 6 扬子津校区知行楼S108 30人/组/次 第11-12周周六上午 6 旅游烹饪学院 酿酒工艺 饶胜其 黄阿根 6 扬子津校区笃行楼S524 20人/组/次
+第13-15周周六上午 3. 《通识实验课Ⅱ》设置为2学分，30学时，包含如下项目：（瘦西湖校区、文汇路校区） 序号 所在学院 项目名称 任课教师 学时 上课地点 分组安排/每次授课学时 上课周次 对学生的要求（比如学生上课前需做什么准备、授课时的注意事项、课后要做什么等）
+1 化学化工学院 玻璃加工技术 张永才 18952568061 4/组/次 瘦西湖校区新化学楼后面灯工房 每组20人/每次4课时 第2-3周 周六下午 穿实验服、带手套和护目镜 2 商学院 商品推销方案设计和实施实践 潘成云 18936260586
+8 文汇路校区 个人或1-3人一个小组；每次4个学时 第7、9周 周六上午 具体见附表 3 美术与设计学院 陶艺制作 程佳德13013710595 12 文汇路校区71号楼（文汇路校区东大门内） 第一组8-12周 第二组12-16周 第8-16周
+周三下午 4 园艺与植物保护学院 昆虫标本采集、制作与识别 刘芳 13815802333 6 文汇路校区10号楼125 4人/组；每次3课时 第14-15周 周六上午 有一次课为户外采集昆虫；穿长袖长裤运动鞋，不能穿裙子高跟鞋 5. 《通识实验课І》、《通识实验课Ⅱ》开课时间、地点见上表，请各学院将该通知告知学生。
+6. 商品推销方案设计和实施实践通识课实施方案附后。 7.请各学院通知学生确认上课时间，我们会在本周五对学生进行分组，届时会公布更详细的分组上课信息。 教务处 2016年3月1日
+                    </p>
+                    <h4 id="list-item-2">课程方案示例</h4>
+                    <p>课程方案示例•一、目的： （一）基本目标 1、培养“人生处处皆营销，人生处处需营销”的意识，学会推销自己，积累人生经验 2、通过为企业推销产品，体验推销快乐，获得推销收入； 3、实践体验商品营销方法和技巧； 4、体会挣钱的苦和乐 （二）远期目标 为学生就业和创业提供一种思路和锻炼
+                    二、内容与总体要求： 1、设计推销实践方案； 2、实施推销实践方案； 3、按照计划流程进行 三、组织形式：集中和分散实施结合； 四、指导教师安排：潘成云 五、学生实践纪律： 安全第一，服从管理，严格要求，获得效果 六、检查及成绩考核： 1、过程考核：实习日记（电子版）。
+                    2、结果考核：推销方案设计和实施结果； 3、经验总结 七、实践基本流程和时间安排： 第一步，联系企业，确定和尝试推销产品，分组（最好1人；可以自由组建小组进行，不超过3人） 3月1日--3月15日 潘成云，各位同学 第二步，自学并且自行进行推销方案设计和实施、撰写推销日记2-3篇，交流推销方案和体会
+                    3月1日---4月9日 各位同学 推销方案设计基本内容见第十项； 4月9日每个同学把方案和日记统一带到教室交流； 期间同时进行推销实践，这样可以完善推销方案 填写销售业绩清单（见附件） 第三步，继续实施推销方案 4月9日—4月23日
+                    第四步，集中实施推销方案 4月23日左右（集中，） 第五步，提交总结报告、销售业绩清单、日记和最终推销方案（电子版） 4月30日前 八、实习结束提交考核材料（全部电子版） 1、实践日记（电子版，至少3篇，字数不限，有标题，要求分为三大块：基本情况；遇到问题和解决办法；收获和启示）。
+                    2、有创意的个人或小组推销方案实施结果总结报告； 3、销售业绩清单（人均销售额500元以上）、 4、最终推销方案 九、集中实验（践）安排 销售扬州手绘明信片（安排待定）4月23日上午8点—12点 十、推销方案基本内容 •A 、目标—具体，量化
+                    •B、实现目标的方法、过程与步骤（具体、可操作） •C、每项工作的负责人 •D、预算 •E、具体时间，包括起止时间 F、其他,如地点，所需物品等 注：自行确定推销商品、进货渠道和方法数量、销售价格、销售方式，所有投入自行承担风险
+</p>
+                    <h4 id="list-item-3">管理办法示例</h4>
+                    <p>管理办法示例.
+
+扬州大学通识实验（践）训练项目管理办法 为了进一步提高我校大学生的综合素质与实践能力，学校决定面向全校全日制本科生开设通识实验（践）训练项目，为了确保项目的申报质量与教学效果，特制定本办法。 一、项目申报 1．通识实验（践）训练项目旨在培养学生的综合素质与实践能力，项目申报要求具有较强的通识性和实践性，贴近学生生活和社会实际，能激发学生的学习兴趣。
+2.为了给学生提供更多的选修机会，每个申报项目原则上不超过10学时。 3.项目申报内容包括项目名称、学时、学分及内容分配、主要教学环节及内容、考核方法及要求、注意事项、开课校区、时间安排、主讲教师、联系方式等。项目申报材料一式一份，于每学期第八周前报教务处教学研究科。
+4.项目经教务处审核后，报主管校长审批，获准开课的项目即进入学校选课系统，作为下学期选修课程资源供学生选修。 二、课程安排与考核 1.实验（践）训练项目的安排由各开课学院（部门）确定，每学期与学校其它课程的教学任务同时送达教务处注册中心，由注册中心录入选课系统；
+2.学生通过选课系统选修实验（践）训练项目； 3.通识实验（践）训练项目的考核应综合考虑学生的态度、提出、分析和解决问题的能力，更加注重学习过程。每位学生必须完整地参加所选项目的理论与实践过程，否则不记成绩。 4.通识实验（践）训练课程的成绩按“合格”、“不合格”两个等级记载。
+三、选课办法 1．为选课及管理的需要，“通识实验”每个项目视为一门课程。每学期选课前注册中心公布开设项目的具体说明、开课地点及要求，以及各个项目的课程号、课序号、学时、学分等。 2．和其他课程一样，学生需通过预选、正选、补退选三个阶段确定所选项目，如果预选人数大于实际容量，需在正选时参加该项目的抽签。
+3．学生在校第一学期及最后一学期不参加“通识训练”课程的选修。 4．学生选课后无故不参加课程的学习或考核，则取消该生之后选修资格。 5.为了提高通识实验（践）的选课覆盖率，每位学生在四年中限选4个项目, 每学期最多选修2个项目。 四、成绩管理
+1．选课结束后，主讲教师通过“教师平台”下载各项目选课名单，根据选课名单组织实验、实训。 2．教师网上录入各项目考核成绩，同时提交一份书面成绩至注册中心。 五、学分计算办法 1．为强化学生实践能力，突出通识实验课程的重要性，“通识实验（践）训练课程”每16学时计1学分，达到或超过8学时但不足16学时计0.5学分。
+2．“通识实验（践）训练课程”可作为校级公选课、任意选修课学分。 3.“通识实验（践）训练课程”每个具体项目的学分是用来衡量该项目的学习量，用于管理及计算的需要，各项目学分不计入学生最终成绩，只有当所修具体项目学分总和大于0.5学分，经学生申请，注册中心审批后，换算成课程学分，记入学生学籍卡。
+4．如学生在校期间所选具体项目学分总和低于0.5学分，则不记该门课程成绩，学分为零。 六、工作量计算 每个项目首次开课的工作量按普通实验（践）课程的1.5倍计算，之后的工作量计算同普通实验（践）课程。 七、本办法自即日起实施，由教务处负责解释。
+2010年9月
+                    </p>
                 </div>
-
-            </aside>
+            </div>
         </div>
-
     </div>
+
 
 {% endblock %}

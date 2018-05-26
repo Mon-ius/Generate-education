@@ -71,7 +71,6 @@
                             <a class="nav-link" href="{{ url_for('experiment.index')}}">{{ _('通识实验') }}</a>
                         </li>
                     </ul>
-                    <a href="#" data-toggle="modal" data-target="#login" class="btn btn-primary navbar-btn ml-0 ml-lg-3">Login </a>
                 </div>
             </div>
         </nav>
@@ -92,10 +91,12 @@
         {% block app_content %}{% endblock %}
         
         {%- block footer %}
-            <hr />
             <footer class="container">
-                <p class="float-right"><a href="#">Top</a></p>
-                <p>&copy; 2017-2018 Monius, All rights reserved. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+                <hr>
+                <p class="float-right"><a href="#">返回顶部</a></p>
+                <p class="copyrights-text mb-3 mb-lg-0">&copy; 创建于2018年5月
+                    <a href="https://github.com/Mon-ius/Generate-education" >By Monius</a>
+                </p>
             </footer>
         {%- endblock footer %}
     </main>
