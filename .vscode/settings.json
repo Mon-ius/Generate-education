@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/opt/anaconda3/envs/new/bin/python"
+    "python.pythonPath": "/opt/anaconda3/envs/fk/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": false
 }

@@ -1,8 +1,4 @@
-
-{% extends "form.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
+ {% extends "form.html" %} {% import 'bootstrap/wtf.html' as wtf %} {% block app_content %}
 <div class="container">
     <header class="section-header">
         <h2 class="mb-2">填写表单</h2>
@@ -36,7 +32,7 @@
                     <textarea name="message" placeholder="具体描述一下您的问题" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <input  value="提交"  class="btn btn-primary">
+                    <input value="提交" class="btn btn-primary">
                 </div>
             </form>
         </div>
@@ -54,7 +50,7 @@
                 </div>
                 <h5>电话</h5>
                 <p class="text-small font-weight-light">+86 0514-87971692</p>
-                
+
             </div>
             <div class="box">
                 <div class="icon d-flex align-items-end">
@@ -62,12 +58,13 @@
                 </div>
                 <h5>邮箱</h5>
 
-                        <a href="mailto:jiaowu@yzu.edu.cn" class="text-small">jiaowu@yzu.edu.cn</a><br>
-                        <p class="text-small font-weight-light">扬州大学教务处</p>
-                    
+                <a href="mailto:jiaowu@yzu.edu.cn" class="text-small">jiaowu@yzu.edu.cn</a>
+                <br>
+                <p class="text-small font-weight-light">扬州大学教务处</p>
+
 
             </div>
         </div>
     </div>
 </div>
- {% endblock %}
+{% endblock %}

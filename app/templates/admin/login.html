@@ -1,0 +1,17 @@
+
+
+{% extends "admin/base.html" %} 
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+    <header class="section-header">
+        <h2 class="mb-2">用户认证</h2>
+    </header>
+    {{ wtf.quick_form(form) }}
+    <p>{{ _('没有账号?') }}
+        <a href="{{ url_for('admin.register') }}">{{ _('点击进行申请!') }}</a>
+    </p>
+    <p>
+        {{ _('密码丢失?') }}
+        <a href="{{ url_for('admin.reset_password_request') }}">{{ _('点击重置密码') }}</a>
+    </p>
+{% endblock %}

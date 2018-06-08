@@ -70,7 +70,9 @@
                         <li class="nav-item {{ module }}">
                             <a class="nav-link" href="{{ url_for('experiment.index')}}">{{ _('通识实验') }}</a>
                         </li>
+                        {% block extra %} {% endblock extra %}
                     </ul>
+
                 </div>
             </div>
         </nav>
