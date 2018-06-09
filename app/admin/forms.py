@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, TextAreaField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from flask_babel import _, lazy_gettext as _l
 from app.models import User,Post,Section
 
-from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, Length
-from ext import INSTITUTIONS
+
+from ext import INSTITUTIONS,photos
 # ...
 # wtforms.fields.(default field arguments, choices=[], coerce=unicode, option_widget=None)
 class LoginForm(FlaskForm):
@@ -58,14 +58,19 @@ class ResetPasswordForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField(_l('Username'), validators=[DataRequired()])
-    about_me = TextAreaField(_l('About me'),
+    username = StringField(_l('用户名'), validators=[DataRequired()])
+    real_name = StringField(_l('真实姓名'), validators=[DataRequired()])
+    about_me = TextAreaField(_l('个人简介'),
                              validators=[Length(min=0, max=140)])
-    submit = SubmitField(_l('Submit'))
+    photo = FileField(validators=[
+        FileAllowed(photos, u'只能上传图片！'),
+        FileRequired(u'文件未选择！')])
+    submit = SubmitField(_l('提交'))
 
-    def __init__(self, original_username, *args, **kwargs):
+    def __init__(self, original_username, original_real_name, * args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
+        self.original_real_name = original_real_name
 
     def validate_username(self, username):
         if username.data != self.original_username:

@@ -1,14 +1,14 @@
-from flask import render_template, redirect, url_for, flash, request,current_app
+from flask import render_template, redirect, url_for, flash, request,current_app,abort,jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_babel import  _, lazy_gettext as _l
 from werkzeug.urls import url_parse
 from app.admin import bp
 
 from app.admin.forms import LoginForm, RegistrationForm, \
-    ResetPasswordRequestForm, ResetPasswordForm, PostForm
+    ResetPasswordRequestForm, ResetPasswordForm, PostForm,EditProfileForm
 from app.models import User, Post, Section
 from datetime import datetime
-from ext import db
+from ext import db,photos
 
 from app.admin.email import send_password_reset_email
 
@@ -21,8 +21,8 @@ def before_request():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_adminenticated:
-        return redirect(url_for('admin.admin'))
+    # if current_user.is_adminenticated:
+    #     return redirect(url_for('admin.admin'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -47,12 +47,12 @@ def logout():
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
-    if current_user.is_adminenticated:
-        return redirect(url_for('admin.admin'))
+    # if current_user.is_adminenticated:
+    #     return redirect(url_for('admin.admin'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data,
-                    email=form.email.data, institute=form.institute.data[0])
+                    email=form.email.data, institute=form.institute.data[0],)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -99,14 +99,86 @@ def reset_password(token):
 def admin():
     if not current_user.is_adminenticated:
         return redirect(url_for('admin.index'))
+    user_num = len(User.query.filter_by(is_authed=True).all())
+    user_num_delay = len(User.query.filter_by(is_authed=False).all())
 
-    return render_template('admin/admin.html', title=_('Admin'))
+    post_num = len(Post.query.filter_by(is_authed=True).all())
+    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
 
+    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+
+@bp.route('/users', methods=['GET', 'POST'])
+@login_required
+def users():
+    if not current_user.is_adminenticated:
+        return redirect(url_for('admin.index'))
+    user_num = len(User.query.filter_by(is_authed=True).all())
+    user_num_delay = len(User.query.filter_by(is_authed=False).all())
+
+    post_num = len(Post.query.filter_by(is_authed=True).all())
+    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
+
+    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+
+@bp.route('/users_delay', methods=['GET', 'POST'])
+@login_required
+def users_delay():
+    if not current_user.is_adminenticated:
+        return redirect(url_for('admin.index'))
+    user_num = len(User.query.filter_by(is_authed=True).all())
+    user_num_delay = len(User.query.filter_by(is_authed=False).all())
+
+    post_num = len(Post.query.filter_by(is_authed=True).all())
+    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
+
+    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+
+@bp.route('/posts', methods=['GET', 'POST'])
+@login_required
+def posts():
+    if not current_user.is_adminenticated:
+        return redirect(url_for('admin.index'))
+    user_num = len(User.query.filter_by(is_authed=True).all())
+    user_num_delay = len(User.query.filter_by(is_authed=False).all())
+
+    post_num = len(Post.query.filter_by(is_authed=True).all())
+    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
+
+    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+
+
+@bp.route('/posts_delay', methods=['GET', 'POST'])
+@login_required
+def posts_delay():
+    if not current_user.is_adminenticated:
+        return redirect(url_for('admin.index'))
+    user_num = len(User.query.filter_by(is_authed=True).all())
+    user_num_delay = len(User.query.filter_by(is_authed=False).all())
+
+    post_num = len(Post.query.filter_by(is_authed=True).all())
+    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
+
+    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+
+
+@bp.route('/query', methods=['GET', 'POST'])
+@login_required
+def query():
+    if not current_user.is_adminenticated:
+        abort(400)
+    if request.form['all']:       
+        if request.form['all']==True:
+            user_query = User.query.filter_by(is_active=True)
+        else:
+            user_query = User.query.filter_by(is_active=True, is_authed=True)
+        return jsonify(user_query)
+    abort(400)
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    print(current_user.is_adminenticated)
     if current_user.is_adminenticated:
         return redirect(url_for('admin.admin'))
     form = PostForm()
@@ -158,19 +230,42 @@ def user(username):
     return render_template('admin/user.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
 
+@bp.route('/course/<username>')
+@login_required
+def course(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    posts = user.posts.order_by(Post.timestamp.desc()).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('admin.user', username=user.username,
+                       page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('admin.user', username=user.username,
+                       page=posts.prev_num) if posts.has_prev else None
+    return render_template('admin/user.html', user=user, posts=posts.items,
+                           next_url=next_url, prev_url=prev_url)
+
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm(current_user.username)
+    form = EditProfileForm(current_user.username, current_user.real_name)
     if form.validate_on_submit():
         current_user.username = form.username.data
+        current_user.real_name = form.real_name.data
         current_user.about_me = form.about_me.data
+        form.photo.data.filename = current_user.set_photo(
+            form.photo.data.filename)
+        print(form.photo.data)
+        filename = photos.save(form.photo.data)
+        file_url = photos.url(filename)
+        current_user.set_photo(file_url.split('/')[-1],token=True)
+        print(file_url)
         db.session.commit()
         flash(_('Your changes have been saved.'))
         return redirect(url_for('admin.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
+        form.real_name.data = current_user.real_name or "如:张三"
         form.about_me.data = current_user.about_me
     return render_template('admin/edit_profile.html', title=_('Edit Profile'),
                            form=form)

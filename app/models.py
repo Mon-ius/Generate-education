@@ -1,6 +1,6 @@
 
 from flask import abort, url_for, current_app
-from datetime import datetime
+
 from flask_restful import Resource, reqparse, fields, marshal
 from passlib.apps import custom_app_context as pwd_context
 from ext import db, desc, login
@@ -10,7 +10,7 @@ from hashlib import md5
 
 
 from time import time
-
+from datetime import datetime, timedelta, timezone
 import jwt
 followers = db.Table(
     'followers',
@@ -23,13 +23,14 @@ class User(UserMixin, db.Model): #用户 ORM注册
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    is_adminenticated = db.Column(db.Boolean)
+    is_adminenticated = db.Column(db.Boolean, default=False)
 
-    institute = db.Column(db.String(128), nullable=False) 
+    institute = db.Column(db.String(128), nullable=False)
+    real_name = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     photo = db.Column(db.String(120))
-    is_authed =db.Column(db.Boolean)
+    is_authed = db.Column(db.Boolean, default=False)
     post = db.relationship('Post', backref='author', lazy='dynamic')
     followed = db.relationship(
         'User', secondary=followers,
@@ -39,6 +40,12 @@ class User(UserMixin, db.Model): #用户 ORM注册
     def __repr__(self):
         return '<User {}>'.format(self.username)  
 
+    def set_photo(self, photo,token=False): 
+        if not token:
+            return generate_password_hash(
+                str(self.id)+photo.split('.')[0])+'.'+photo.split('.')[1]
+        self.photo=photo
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -46,6 +53,8 @@ class User(UserMixin, db.Model): #用户 ORM注册
         return check_password_hash(self.password_hash, password)
 
     def avatar(self, size):
+        if self.photo:
+            return "users/"+self.photo
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
@@ -94,7 +103,7 @@ class Post(db.Model): #实验课程 ORM注册
     body = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     photo = db.Column(db.String(120), nullable=False)
-    is_authed = db.Column(db.Boolean)
+    is_authed = db.Column(db.Boolean, default=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
@@ -113,7 +122,7 @@ class Section(db.Model): #课程章节 ORM注册
 
     photo = db.Column(db.String(120), nullable=False)
     link = db.Column(db.String(120))
-    is_authed = db.Column(db.Boolean)
+    is_authed = db.Column(db.Boolean, default=False)
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'),
                         nullable=False)

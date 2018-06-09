@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, current_app
-
-from ext import db, migrate, bootstrap, babel, Config, images, cache, login, mail
+from flask_uploads import configure_uploads, patch_request_class
+from ext import db, migrate, bootstrap, babel, Config, images, cache, login, mail,photos
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -17,6 +17,11 @@ def create_app(config_class=Config):
     login.init_app(app)  # 用户系统 初始化
     login.login_view = 'admin.login'
     mail.init_app(app)  # 邮件系统 初始化
+
+
+    configure_uploads(app, photos)
+    patch_request_class(app)  # 文件大小限制，默认为16MB
+
     cache.init_app(app, config={'CACHE_TYPE': 'simple'})  # 页面缓存 初始化
     
     from app.main import bp as main_bp  # 首页注册
@@ -37,6 +42,7 @@ def create_app(config_class=Config):
     from app.errors import bp as errors_bp #错误处理页面注册
     app.register_blueprint(errors_bp)
     
+
     return app
 
 

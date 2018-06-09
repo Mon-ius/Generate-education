@@ -1,13 +1,9 @@
 {% extends "admin/base.html" %} 
 {% block app_content %}
-<table>
-    <tr valign="top">
-        <td>
-            <img src="{{ user.avatar(128) }}">
-        </td>
-        <td>
-            <h1>User: {{ user.username }}</h1>
-        </td>
-    </tr>
-</table>
+
+
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">个人主页</h6>
+    {% include 'admin/_user.html' %}
+</div>
 {% for post in posts %} {% include '_post.html' %} {% endfor %} {% endblock %}

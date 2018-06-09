@@ -4,7 +4,11 @@
     <header class="section-header">
     <h2 class="mb-2">用户注册</h2>
     </header>
-    {{ wtf.quick_form(form) }}
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
 {% endblock %}
 {% block scripts %}
     {{ super() }}

@@ -1,0 +1,20 @@
+<div class="media text-muted pt-3">
+    <img class="mr-3" src="{{ url_for('images.crop', filename=user.avatar(64), width=48, height=48, quality=50, enlarge=True) }}"
+        alt="">
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">@{{ user.username }}</strong>
+        {{ user.real_name }}
+    </p>
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">邮箱</strong>{{ user.email }}
+    </p>
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">学院</strong>{{ user.institute }}
+    </p>
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">个人简介</strong>{{ user.about_me }}
+    </p>
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">认证用户</strong>{{ user.is_authed }}
+    </p>
+</div>
