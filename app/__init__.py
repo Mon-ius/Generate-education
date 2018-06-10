@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, current_app
 from flask_uploads import configure_uploads, patch_request_class
-from ext import db, migrate, bootstrap, babel, Config, images, cache, login, mail,photos
+from ext import db, migrate, bootstrap, babel, Config, images, cache, login, mail, photos, sphotos, videos
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -18,8 +18,7 @@ def create_app(config_class=Config):
     login.login_view = 'admin.login'
     mail.init_app(app)  # 邮件系统 初始化
 
-
-    configure_uploads(app, photos)
+    configure_uploads(app, (photos, sphotos, videos))  # 文件系统初始化
     patch_request_class(app)  # 文件大小限制，默认为16MB
 
     cache.init_app(app, config={'CACHE_TYPE': 'simple'})  # 页面缓存 初始化

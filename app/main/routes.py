@@ -6,7 +6,7 @@ from app.main import bp
 
 
 @bp.route('/', methods=['GET', 'POST'])
-def  index():
+def index():
     Hight = 1920
     Width = 800
     # if request.method == 'GET':

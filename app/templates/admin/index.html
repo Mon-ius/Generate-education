@@ -48,7 +48,9 @@
                         <a href="#" class="card-link">邮箱认证</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{ url_for('admin.edit_profile')}}" class="card-link">填写额外信息</a>
+                        <a href="{{ url_for('admin.edit_profile')}}" class="card-link">
+                            填写额外信息 {% if current_user.is_authed %} <span class="glyphicons glyphicons-ok"></span> {% endif %}
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -61,8 +63,8 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">课程名称,简介,封面</li>
-                        <li class="list-group-item">
-                            <a href="#" class="card-link">开始申请</a>
+                        <li class="list-group-item disabled">
+                            <a href="{{ url_for('admin.post')}}" class="card-link">开始申请</a>
                         </li>
                     </ul>
                 </div>

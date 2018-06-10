@@ -8,7 +8,7 @@ from app.admin.forms import LoginForm, RegistrationForm, \
     ResetPasswordRequestForm, ResetPasswordForm, PostForm,EditProfileForm
 from app.models import User, Post, Section
 from datetime import datetime
-from ext import db,photos
+from ext import db, photos, sphotos
 
 from app.admin.email import send_password_reset_email
 
@@ -173,12 +173,24 @@ def query():
             user_query = User.query.filter_by(is_active=True, is_authed=True)
         return jsonify(user_query)
     abort(400)
+    
+
+@bp.route('/delete/<username>', methods=['GET', 'POST'])
+@login_required
+def delete(username):
+    if not current_user.is_adminenticated:
+        abort(400)
+    user = User.query.filter_by(username=username).first_or_404()
+    db.session.delete(user)
+    db.session.commit()
+    print(user.username)
+    flash(_('用户删除成功'))
+    return redirect(url_for('admin.users'))
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    print(current_user.is_adminenticated)
     if current_user.is_adminenticated:
         return redirect(url_for('admin.admin'))
     form = PostForm()
@@ -196,7 +208,7 @@ def index():
         if posts.has_next else None
     prev_url = url_for('admin.index', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('admin/index.html', title=_('Home'), form=form,
+    return render_template('admin/index.html', title=_('管理首页'), form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
@@ -220,15 +232,7 @@ def explore():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    page = request.args.get('page', 1, type=int)
-    posts = user.posts.order_by(Post.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('admin.user', username=user.username,
-                       page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('admin.user', username=user.username,
-                       page=posts.prev_num) if posts.has_prev else None
-    return render_template('admin/user.html', user=user, posts=posts.items,
-                           next_url=next_url, prev_url=prev_url)
+    return render_template('admin/user.html', user=user)
 
 @bp.route('/course/<username>')
 @login_required
@@ -237,17 +241,21 @@ def course(username):
     page = request.args.get('page', 1, type=int)
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('admin.user', username=user.username,
+    posts = user.posts.order_by(Post.timestamp.desc()).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('admin.course', username=user.username,
                        page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('admin.user', username=user.username,
+    prev_url = url_for('admin.course', username=user.username,
                        page=posts.prev_num) if posts.has_prev else None
-    return render_template('admin/user.html', user=user, posts=posts.items,
+    return render_template('admin/course.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    if current_user.is_adminenticated:
+        return redirect(url_for('admin.admin'))
     form = EditProfileForm(current_user.username, current_user.real_name)
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -255,19 +263,39 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         form.photo.data.filename = current_user.set_photo(
             form.photo.data.filename)
-        print(form.photo.data)
+        # print(form.photo.data)
         filename = photos.save(form.photo.data)
         file_url = photos.url(filename)
         current_user.set_photo(file_url.split('/')[-1],token=True)
-        print(file_url)
+        # print(file_url)
         db.session.commit()
-        flash(_('Your changes have been saved.'))
-        return redirect(url_for('admin.edit_profile'))
+        flash(_('个人信息已更新'))
+        return redirect(url_for('admin.index'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.real_name.data = current_user.real_name or "如:张三"
         form.about_me.data = current_user.about_me
-    return render_template('admin/edit_profile.html', title=_('Edit Profile'),
+    return render_template('admin/edit_profile.html', title=_('修改资料'),
+                           form=form)
+@bp.route('/post', methods=['GET', 'POST'])
+@login_required
+def post():
+    if current_user.is_adminenticated:
+        return redirect(url_for('admin.admin'))
+    form = PostForm()
+    
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, body=form.body.data, author=current_user)
+        form.photo.data.filename = post.set_photo(
+            form.photo.data.filename)
+        filename = sphotos.save(form.photo.data)
+        file_url = sphotos.url(filename)
+        post.set_photo(file_url.split('/')[-1], token=True)
+        db.session.add(post)
+        db.session.commit()
+        flash(_('课程申请已提交'))
+        return redirect(url_for('admin.index'))
+    return render_template('admin/post.html', title=_('申请课程'),
                            form=form)
 
 

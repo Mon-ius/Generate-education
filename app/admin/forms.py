@@ -6,7 +6,7 @@ from flask_babel import _, lazy_gettext as _l
 from app.models import User,Post,Section
 
 
-from ext import INSTITUTIONS,photos
+from ext import INSTITUTIONS, photos, sphotos, videos
 # ...
 # wtforms.fields.(default field arguments, choices=[], coerce=unicode, option_widget=None)
 class LoginForm(FlaskForm):
@@ -17,8 +17,8 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    institutions = [(str(i), ins)
-                    for i, ins in enumerate(INSTITUTIONS)]
+    institutions = [(ins, ins)
+                    for  ins in INSTITUTIONS]
     
     username = StringField(_l('用户名'), validators=[DataRequired()])
     email = StringField(_l('邮箱'), validators=[DataRequired(), Email()])
@@ -36,12 +36,12 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError(_('Please use a different username.'))
+            raise ValidationError(_('该用户名已被占用'))
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError(_('Please use a different email address.'))
+            raise ValidationError(_('该邮箱已被使用.'))
 
 
 class ResetPasswordRequestForm(FlaskForm):
@@ -76,9 +76,40 @@ class EditProfileForm(FlaskForm):
         if username.data != self.original_username:
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
-                raise ValidationError(_('Please use a different username.'))
+                raise ValidationError(_('此用户名已被占用'))
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField(_l('Say something'), validators=[DataRequired()])
-    submit = SubmitField(_l('Submit'))
+    title = StringField(_l('课程名称'), validators=[DataRequired()])
+    body = TextAreaField(_l('课程简介'),
+                             validators=[Length(min=0, max=150)])
+    photo = FileField(validators=[
+        FileAllowed(sphotos, u'只能上传图片！'),
+        FileRequired(u'文件未选择！')])
+
+    submit = SubmitField(_l('课程申请'))
+
+    def validate_post(self, post):
+        post = Post.query.filter_by(title=self.title.data).first()
+        if post is not None:
+            raise ValidationError(_('此课程名已被占用'))
+
+class SectForm(FlaskForm):
+    title = StringField(_l('课程名称'), validators=[DataRequired()])
+    body = TextAreaField(_l('课程简介'),
+                             validators=[Length(min=0, max=150)])
+    photo = FileField(validators=[
+        FileAllowed(sphotos, u'只能上传图片！'),
+        FileRequired(u'文件未选择！')])
+
+    video = FileField(validators=[
+        FileAllowed(videos, u'只能上传视频！'),
+        FileRequired(u'文件未选择！')])
+
+    submit = SubmitField(_l('章节申请'))
+
+    def validate_post(self, post):
+        section = Section.query.filter_by(title=self.title.data).first()
+        if section is not None:
+            raise ValidationError(_('此章节名已被占用'))
+

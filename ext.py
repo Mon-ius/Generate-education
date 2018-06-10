@@ -10,6 +10,8 @@ from config import Config
 from flask_login import LoginManager
 from flask_uploads import UploadSet,IMAGES
 
+VIDEOS = ('mp4','flv','mkv','avi')
+
 db = SQLAlchemy()
 migrate = Migrate()
 bootstrap = Bootstrap()
@@ -19,6 +21,8 @@ images = Images()
 login = LoginManager()
 mail = Mail()
 photos = UploadSet('photos', IMAGES)
+sphotos = UploadSet('posts', IMAGES)
+videos = UploadSet('videos', VIDEOS)
 desc = sqlalchemy.desc
 INSTITUTIONS = ["信息工程学院", "新闻与传媒学院", "广陵学院", " 文学院", "社会发展学院", "物理科学与技术学院",
 "化学化工学院","教育科学学院（师范学院）","学前教育学院","数学科学学院"," 马克思主义学院","农学院",

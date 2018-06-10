@@ -113,6 +113,18 @@ class Post(db.Model): #实验课程 ORM注册
     def __repr__(self):
         return '<Post %r>' % self.title
 
+    def avatar(self, size):
+        if self.photo:
+            return "posts/"+self.photo
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+    def set_photo(self, photo, token=False):
+        if not token:
+            return generate_password_hash(
+                str(self.id)+photo.split('.')[0])+'.'+photo.split('.')[1]
+        self.photo = photo
 
 class Section(db.Model): #课程章节 ORM注册
     id = db.Column(db.Integer, primary_key=True)
