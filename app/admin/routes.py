@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request,current_app,abort,jsonify
+from flask import render_template, redirect, url_for, flash, request,current_app,abort,jsonify,json
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_babel import  _, lazy_gettext as _l
 from werkzeug.urls import url_parse
@@ -64,8 +64,8 @@ def register():
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
-    if current_user.is_adminenticated:
-        return redirect(url_for('admin.admin'))
+    # if current_user.is_adminenticated:
+    #     return redirect(url_for('admin.admin'))
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -80,8 +80,8 @@ def reset_password_request():
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
-    if current_user.is_adminenticated:
-        return redirect(url_for('admin.admin'))
+    # if current_user.is_adminenticated:
+    #     return redirect(url_for('admin.admin'))
     user = User.verify_reset_password_token(token)
     if not user:
         return redirect(url_for('admin.index'))
@@ -105,74 +105,74 @@ def admin():
     post_num = len(Post.query.filter_by(is_authed=True).all())
     post_num_delay = len(Post.query.filter_by(is_authed=False).all())
 
-    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+    return render_template('admin/admin/admin.html', title=_('管理'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
 
 @bp.route('/users', methods=['GET', 'POST'])
 @login_required
 def users():
     if not current_user.is_adminenticated:
         return redirect(url_for('admin.index'))
-    user_num = len(User.query.filter_by(is_authed=True).all())
-    user_num_delay = len(User.query.filter_by(is_authed=False).all())
 
-    post_num = len(Post.query.filter_by(is_authed=True).all())
-    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
-
-    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+    user = User.query.filter_by(is_authed=True).all()
+    return render_template('admin/admin/users.html', title=_('认证用户'), users=user)
 
 @bp.route('/users_delay', methods=['GET', 'POST'])
 @login_required
 def users_delay():
     if not current_user.is_adminenticated:
         return redirect(url_for('admin.index'))
-    user_num = len(User.query.filter_by(is_authed=True).all())
-    user_num_delay = len(User.query.filter_by(is_authed=False).all())
 
-    post_num = len(Post.query.filter_by(is_authed=True).all())
-    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
-
-    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+    user_delay = User.query.filter_by(is_authed=False).all()
+    return render_template('admin/admin/users.html', title=_('待审核用户'), users=user_delay)
 
 @bp.route('/posts', methods=['GET', 'POST'])
 @login_required
 def posts():
     if not current_user.is_adminenticated:
         return redirect(url_for('admin.index'))
-    user_num = len(User.query.filter_by(is_authed=True).all())
-    user_num_delay = len(User.query.filter_by(is_authed=False).all())
 
-    post_num = len(Post.query.filter_by(is_authed=True).all())
-    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
-
-    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
-
+    post = Post.query.filter_by(is_authed=True).all()
+    return render_template('admin/admin/posts.html', title=_('上线课程'), posts=post)
 
 @bp.route('/posts_delay', methods=['GET', 'POST'])
 @login_required
 def posts_delay():
     if not current_user.is_adminenticated:
         return redirect(url_for('admin.index'))
-    user_num = len(User.query.filter_by(is_authed=True).all())
-    user_num_delay = len(User.query.filter_by(is_authed=False).all())
 
-    post_num = len(Post.query.filter_by(is_authed=True).all())
-    post_num_delay = len(Post.query.filter_by(is_authed=False).all())
-
-    return render_template('admin/admin.html', title=_('Admin'), user_num=user_num, user_num_delay=user_num_delay, post_num=post_num, post_num_delay=post_num_delay)
+    post_delay = Post.query.filter_by(is_authed=False).all()
+    return render_template('admin/admin/posts.html', title=_('待审核课程'), posts=post_delay)
 
 
-@bp.route('/query', methods=['GET', 'POST'])
+@bp.route('/query/<key>/<value>/<method>')
 @login_required
-def query():
+def query(key,value,method):
+    
     if not current_user.is_adminenticated:
         abort(400)
-    if request.form['all']:       
-        if request.form['all']==True:
-            user_query = User.query.filter_by(is_active=True)
-        else:
-            user_query = User.query.filter_by(is_active=True, is_authed=True)
-        return jsonify(user_query)
-    abort(400)
+    method = bool(int(method))
+    if key=='users':
+        user = User.query.filter_by(username=value).first_or_404()
+        user.is_authed = method
+        db.session.commit()
+
+    if key=='posts':
+        post = Post.query.filter_by(title=value).first_or_404()
+        post.is_authed = method
+        print(post.is_authed)
+        db.session.commit()
+        print(post.is_authed)
+
+    if key=='sections':
+        section = Section.query.filter_by(title=value).first_or_404()
+        post.is_authed = method
+        db.session.commit()
+
+    last_page = 'admin.'+ key
+    if(method):
+        last_page = last_page+'_delay'
+    next_page = url_for(last_page)
+    return redirect(next_page)
     
 
 @bp.route('/delete/<username>', methods=['GET', 'POST'])
@@ -193,26 +193,40 @@ def delete(username):
 def index():
     if current_user.is_adminenticated:
         return redirect(url_for('admin.admin'))
-    form = PostForm()
-    if form.validate_on_submit():
 
-        post = Post(body=form.post.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash(_('Your post is now live!'))
-        return redirect(url_for('admin.index'))
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('admin.index', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('admin.index', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('admin/index.html', title=_('管理首页'), form=form,
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+    return render_template('admin/index.html', title=_('管理首页'), 
+                           posts=posts.items)
 
 
+@bp.route('/post', methods=['GET', 'POST'])
+@login_required
+def post():
+    if current_user.is_adminenticated:
+        return redirect(url_for('admin.admin'))
+    if not current_user.real_name:
+        flash(_('完善资料后再试'))
+        return redirect(url_for('admin.index'))
+    if not current_user.is_authed:
+        flash(_('用户信息审核中, 稍后再试'))
+        return redirect(url_for('admin.index'))
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data,
+                    body=form.body.data, author=current_user)
+        form.photo.data.filename = post.set_photo(
+            form.photo.data.filename)
+        filename = sphotos.save(form.photo.data)
+        file_url = sphotos.url(filename)
+        post.set_photo(file_url.split('/')[-1], token=True)
+        db.session.add(post)
+        db.session.commit()
+        flash(_('课程申请已提交'))
+        return redirect(url_for('admin.index'))
+    return render_template('admin/post.html', title=_('申请课程'),
+                           form=form)
 @bp.route('/explore')
 @login_required
 def explore():
@@ -227,16 +241,20 @@ def explore():
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
-
 @bp.route('/user/<username>')
 @login_required
 def user(username):
+    if current_user.username == username:
+        return redirect(url_for('admin.index'))
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('admin/user.html', user=user)
 
-@bp.route('/course/<username>')
+@bp.route('/courses/<username>')
 @login_required
 def course(username):
+    if current_user.is_adminenticated:
+        flash(_('这里不能审核课程!'))
+        return redirect(url_for('admin.index'))
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
@@ -249,6 +267,23 @@ def course(username):
                        page=posts.prev_num) if posts.has_prev else None
     return render_template('admin/course.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
+
+@bp.route('/view_course/<title>')
+@login_required
+def view_course(title):
+    post = Post.query.filter_by(title=title).first_or_404()
+    return render_template('admin/user/view_course.html', post=post)
+
+@bp.route('/edit_course/<title>')
+@login_required
+def edit_course(title):
+    if current_user.is_adminenticated:
+        flash(_('这里不能审核课程!'))
+        return redirect(url_for('admin.index'))
+    post = Post.query.filter_by(title=title).first_or_404()
+    if not post.author == current_user:
+        flash(_('你没有权限这么做!'))
+    return render_template('admin/user/edit_course.html', post=post)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
@@ -277,13 +312,20 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('admin/edit_profile.html', title=_('修改资料'),
                            form=form)
-@bp.route('/post', methods=['GET', 'POST'])
+
+
+@bp.route('/section', methods=['GET', 'POST'])
 @login_required
-def post():
+def section():
     if current_user.is_adminenticated:
         return redirect(url_for('admin.admin'))
+    if not current_user.real_name:
+        flash(_('完善资料后再试'))
+        return redirect(url_for('admin.index'))
+    if not current_user.is_authed:
+        flash(_('用户信息审核中, 稍后再试'))
+        return redirect(url_for('admin.index'))
     form = PostForm()
-    
     if form.validate_on_submit():
         post = Post(title=form.title.data, body=form.body.data, author=current_user)
         form.photo.data.filename = post.set_photo(
@@ -295,7 +337,7 @@ def post():
         db.session.commit()
         flash(_('课程申请已提交'))
         return redirect(url_for('admin.index'))
-    return render_template('admin/post.html', title=_('申请课程'),
+    return render_template('admin/post.html', title=_('添加章节'),
                            form=form)
 
 

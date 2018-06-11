@@ -28,28 +28,31 @@
             <small>上次登录:{{ current_user.last_seen.strftime('%Y-%m-%d') }}</small>
         </div>
     </div>
-    {% for post in posts %}
-    <div>
-        <p>{{ post.author.username }} says:
-            <b>{{ post.body }}</b>
-        </p>
-    </div>
-    {% endfor %}
-     
     <div class="row">
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">用户资料</h5>
-                    <p class="card-text">请完善以下信息,以获得更高权限</p>
+                    <p class="card-text">请完善以下信息,以获得认证</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a href="#" class="card-link">邮箱认证</a>
+                        <a href="#" class="card-link">邮箱认证
+                             {% if current_user.is_authed %}
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                            {% endif %}
+                        </a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ url_for('admin.edit_profile')}}" class="card-link">
-                            填写额外信息 {% if current_user.is_authed %} <span class="glyphicons glyphicons-ok"></span> {% endif %}
+                            完善个人资料 
+                            {% if current_user.is_authed %} 
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                            {% endif %}
                         </a>
                     </li>
                 </ul>
@@ -64,7 +67,13 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">课程名称,简介,封面</li>
                         <li class="list-group-item disabled">
-                            <a href="{{ url_for('admin.post')}}" class="card-link">开始申请</a>
+                            <a href="{{ url_for('admin.post')}}" class="card-link">开始申请
+                                {% if current_user.is_authed %}
+                                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                {% endif %}
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -72,16 +81,49 @@
         <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">课程提交</h5>
+                        <h5 class="card-title">添加单元</h5>
                         <p class="card-text">准备以下内容进行提交</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">章节名称,概要,封面,视频</li>
+                        <li class="list-group-item">单元名称,概要,封面,视频</li>
                         <li class="list-group-item">
-                            <a href="#" class="card-link">开始提交</a>
+                            <a href="{{ url_for('admin.course', username=current_user.username) }}" class="card-link">开始提交
+                                {% if current_user.is_authed %}
+                                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                {% endif %}
+                            </a>
                         </li>
                     </ul>
                 </div>
         </div>
     </div>
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">我的课程</h6>
+    {% if posts %}
+        {% for post in posts %}
+            <div class="media text-muted pt-3">
+                <img  class="mr-2 rounded" src="{{ url_for('images.crop', filename=post.avatar(64), width=48, height=48, quality=50, enlarge=True) }}"
+                    data-holder-rendered="true" style="width: 32px; height: 32px;">
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">提交了课程申请:{{ post.title }}</strong>
+                        <a href="{{ url_for('admin.view_course',title=post.title)}}">查看</a>
+                         
+                    </div>
+                    <span class="d-block">@{{ post.timestamp.strftime('%Y-%m-%d') }}</span>
+                </div>
+            </div>
+        {% endfor %}
+        <small class="d-block text-right mt-3">
+            <a href="#">查看全部</a>
+        </small>
+    {% else %}
+        <p>
+            {{ _('暂无课程') }}               
+        </p>
+    {% endif %}
+</div>
+    
 {% endblock %}

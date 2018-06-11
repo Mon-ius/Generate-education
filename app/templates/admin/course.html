@@ -1,19 +1,30 @@
 {% extends "admin/base.html" %}
+{% block styles %} {{ super() }}
+<style>
+:root { --jumbotron-padding-y: 3rem; } .jumbotron { padding-top: var(--jumbotron-padding-y); padding-bottom: var(--jumbotron-padding-y);
+margin-bottom: 0; background-color: #fff; } @media (min-width: 768px) { .jumbotron { padding-top: calc(var(--jumbotron-padding-y)
+* 2); padding-bottom: calc(var(--jumbotron-padding-y) * 2); } } .jumbotron p:last-child { margin-bottom: 0; } .jumbotron-heading
+{ font-weight: 300; } .jumbotron .container { max-width: 40rem; } footer { padding-top: 3rem; padding-bottom: 3rem; } footer
+p { margin-bottom: .25rem; } .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+    </style>
+    {% endblock %}
 {% block app_content %}
-{% if post %}
-    <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h6 class="border-bottom border-gray pb-2 mb-0">课程页面</h6>
-        {% for post in posts %} {% include '_post.html' %} {% endfor %}
+{% if posts %}
+    <h6 class="border-bottom border-gray pb-2 mb-0">课程页面</h6>
+    <div class="row">
+        {% for post in posts %} 
+            {% include 'admin/_post.html' %}
+        {% endfor %}
     </div>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="previous {% if not prev_url %} disabled{% endif %}">
-                <a class="page-link" tabindex="-1" href="{{ prev_url or '#' }}">
+            <li class="previous ">
+                <a class="btn btn-outline-primary {% if not prev_url %} disabled{% endif %}" tabindex="-1" href="{{ prev_url or '#' }}">
                     <span aria-hidden="true">&larr;</span> {{ _('上一页') }}
                 </a>
             </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a class="page-link"  href="{{ next_url or '#' }}">
+            <li class="next">
+                <a class="btn btn-outline-secondary {% if not next_url %} disabled{% endif %}"  href="{{ next_url or '#' }}">
                     {{ _('下一页') }}
                     <span aria-hidden="true">&rarr;</span>
                 </a>
@@ -21,9 +32,12 @@
         </ul>
     </nav>
 
-        
 {% else %}
-        木有提交课程哦
+<p>
+    <a class="btn btn-outline-secondary" role="button" href="{{ url_for('admin.index') }}">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>{{ _('木有提交课程哦') }}</a>
+</p>
 {% endif %}
+
 
 {% endblock %}

@@ -1,0 +1,22 @@
+<div class="media text-muted pt-3">
+    <img class="mr-3" src="{{ url_for('images.crop', filename=post.avatar(64), width=48, height=48, quality=50, enlarge=True) }}"
+        alt="">
+
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+
+        <strong class="d-block text-gray-dark">课程名:</strong>{{ post.title }}
+    </p>
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">更新于:</strong>{{ post.timestamp.strftime('%Y-%m-%d') }} @{{post.author.username}}
+    </p>
+
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">通过审核:</strong>{{ post.is_authed }}
+    </p>
+
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">课程简介:</strong>
+        {{ post.body }}
+    </p>
+
+</div>

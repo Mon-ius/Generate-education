@@ -1,0 +1,42 @@
+{% extends "admin/admin/base.html" %}
+{% block app_content %}
+{% if posts %}
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">课程审核</h6>
+        {% for post in posts %} 
+            {% include 'admin/admin/_post.html' %}
+            {% if post.is_authed %}
+                <small class="d-block text-right mt-3">
+                    <a href="{{ url_for('admin.query',key='posts',value=post.title,method=0)}}">紧急下线</a>
+                </small>
+            {% else %}
+                <small class="d-block text-right mt-3">
+                    <a href="{{ url_for('admin.query',key='posts',value=post.title,method=1)}}">确认通过</a>
+                </small>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="previous {% if not prev_url %} disabled{% endif %}">
+                <a class="page-link" tabindex="-1" href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> {{ _('上一页') }}
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a class="page-link"  href="{{ next_url or '#' }}">
+                    {{ _('下一页') }}
+                    <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+{% else %}
+<p>
+    <a class="btn btn-outline-secondary" role="button" href="{{ url_for('admin.index') }}">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>{{ _('暂无课程') }}</a>
+</p>
+{% endif %}
+
+{% endblock %}

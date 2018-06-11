@@ -1,0 +1,20 @@
+{% extends "admin/admin/base.html" %} 
+{% block app_content %}
+
+<div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+    <img class="mr-3" src="{{ current_user.avatar(64) }}" alt="" width="48" height="48">
+    <div class="lh-100">
+        <h6 class="mb-0 text-white lh-100">{{ current_user.username }}</h6>
+        <small>上次登录:{{ current_user.last_seen.strftime('%Y-%m-%d') }}</small>
+    </div>
+</div>
+{% for post in posts %}
+<div>
+    <p>{{ post.author.username }} says:
+        <b>{{ post.body }}</b>
+    </p>
+</div>
+{% endfor %}
+
+{% endblock %}
+
