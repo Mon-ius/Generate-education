@@ -89,10 +89,18 @@ class PostForm(FlaskForm):
 
     submit = SubmitField(_l('课程申请'))
 
-    def validate_post(self, post):
-        post = Post.query.filter_by(title=self.title.data).first()
-        if post is not None:
-            raise ValidationError(_('此课程名已被占用'))
+    def __init__(self, original_title=None, original_body=None, * args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.original_title = original_title
+        self.original_body = original_body
+
+    def validate_post(self, title):
+        if title.data != self.original_title:
+            post = Post.query.filter_by(title=self.title.data).first()
+            if post is not None:
+                raise ValidationError(_('此课程名已被占用'))
+
+            
 
 class SectForm(FlaskForm):
     title = StringField(_l('单元名称'), validators=[DataRequired()])

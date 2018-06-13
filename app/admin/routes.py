@@ -249,6 +249,14 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('admin/user.html', user=user)
 
+@bp.route('/institute/<name>')
+@login_required
+def institute(name):
+    if current_user.username == name:
+        return redirect(url_for('admin.index'))
+    user = User.query.filter_by(username=name).first_or_404()
+    return render_template('admin/user.html', user=user)
+
 @bp.route('/courses/<q_c>/<q_name>')
 @login_required
 def course(q_c,q_name):
@@ -276,9 +284,18 @@ def course(q_c,q_name):
 @login_required
 def view_course(title):
     post = Post.query.filter_by(title=title).first_or_404()
-    return render_template('admin/user/view_course.html', post=post)
+    return render_template('admin/user/view_course.html', post=post, sections=post.sections.all())
 
-@bp.route('/edit_course/<title>')
+@bp.route('/view_section/<course>/<title>')
+@login_required
+def view_section(course, title):
+    post = Post.query.filter_by(title=course).first_or_404()
+    sect = Section.query.filter_by(parent=post,title=title).first_or_404()
+    print(sect)
+    return render_template('admin/user/view_section.html', sect=sect,post=post)
+
+
+@bp.route('/edit_course/<title>', methods=['GET', 'POST'])
 @login_required
 def edit_course(title):
     if current_user.is_adminenticated:
@@ -286,8 +303,25 @@ def edit_course(title):
         return redirect(url_for('admin.index'))
     post = Post.query.filter_by(title=title).first_or_404()
     if not post.author == current_user:
+        print(2333)
         flash(_('你没有权限这么做!'))
-    return render_template('admin/user/edit_course.html', post=post)
+    form = PostForm(post.title,post.body)
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        form.photo.data.filename = post.set_photo(
+            form.photo.data.filename)
+        filename = sphotos.save(form.photo.data)
+        file_url = sphotos.url(filename)
+        post.set_photo(file_url.split('/')[-1], token=True)
+        db.session.add(post)
+        db.session.commit()
+        flash(_('此课程信息已更新'))
+        return redirect(url_for('admin.index'))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.body.data = post.body
+    return render_template('admin/user/edit_course.html', form=form)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])

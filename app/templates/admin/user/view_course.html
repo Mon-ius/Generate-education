@@ -22,7 +22,7 @@
                 <p>{{post.body}}</p>
             </div>
 
-    </div>
+        </div>
         <!-- /.blog-main -->
 
         <aside class="col-md-4 blog-sidebar">
@@ -34,16 +34,13 @@
             <div class="p-3">
                 <h4>课程单元</h4>
                 <ol class="list-unstyled mb-0">
-                    <li>
-                        <a href="#">课程单元1</a>
-                    </li>
-                    <li>
-                        <a href="#">课程单元2</a>
-                    </li>
+                    {% for sec in sections %}
+                        <li>
+                            <a href="{{ url_for('admin.view_section',course=post.title,title=sec.title)}}">{{ sec.title|e }}</a>
+                        </li>
+                    {% endfor %}
                 </ol>
             </div>
-
-
         </aside>
     </div>
 {% endblock %}
