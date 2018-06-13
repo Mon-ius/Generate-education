@@ -7,6 +7,7 @@
                 <div class="btn-group">
                     <a href="{{ url_for('admin.view_course',title=post.title)}}" class="page-link btn-outline-secondary">预览</a>
                     <a href="{{ url_for('admin.edit_course',title=post.title)}}" class="page-link btn-outline-secondary">编辑</a>
+                    <a href="{{ url_for('admin.add_section',title=post.title)}}" class="page-link btn-outline-secondary">添加</a>
                 </div>
                 <small class="text-muted">{{ post.timestamp.strftime('%Y-%m-%d') }}</small>
             </div>

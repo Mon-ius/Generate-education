@@ -17,7 +17,8 @@
                 <a href="{{ url_for('admin.login') }}" class="dropdown-item">登录</a>   
             {% else %}
                 <a href="{{ url_for('admin.user', username=current_user.username) }}" class="dropdown-item">个人主页</a>
-                <a href="{{ url_for('admin.course', username=current_user.username) }}" class="dropdown-item">我的课程</a>
+                <a href="{{ url_for('admin.course',q_c=0,q_name=current_user.username)}}" class="dropdown-item">我的课程</a>
+                 
                 <a href="{{ url_for('admin.logout') }}" class="dropdown-item">退出</a>
             {% endif %}
         </div>

@@ -87,7 +87,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">单元名称,概要,封面,视频</li>
                         <li class="list-group-item">
-                            <a href="{{ url_for('admin.course', username=current_user.username) }}" class="card-link">开始提交
+                            <a href="{{ url_for('admin.course',q_c=0,q_name=current_user.username)}}" class="card-link">开始提交
                                 {% if current_user.is_authed %}
                                     <i class="fa fa-certificate" aria-hidden="true"></i>
                                 {% else %}
@@ -109,8 +109,7 @@
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <strong class="text-gray-dark">提交了课程申请:{{ post.title }}</strong>
-                        <a href="{{ url_for('admin.view_course',title=post.title)}}">查看</a>
-                         
+                        <a href="{{ url_for('admin.course',q_c=1,q_name=post.title)}}">查看</a>                         
                     </div>
                     <span class="d-block">@{{ post.timestamp.strftime('%Y-%m-%d') }}</span>
                 </div>

@@ -95,21 +95,18 @@ class PostForm(FlaskForm):
             raise ValidationError(_('此课程名已被占用'))
 
 class SectForm(FlaskForm):
-    title = StringField(_l('课程名称'), validators=[DataRequired()])
-    body = TextAreaField(_l('课程简介'),
+    title = StringField(_l('单元名称'), validators=[DataRequired()])
+    body = TextAreaField(_l('单元简介'),
                              validators=[Length(min=0, max=150)])
-    photo = FileField(validators=[
-        FileAllowed(sphotos, u'只能上传图片！'),
-        FileRequired(u'文件未选择！')])
 
     video = FileField(validators=[
         FileAllowed(videos, u'只能上传视频！'),
         FileRequired(u'文件未选择！')])
 
-    submit = SubmitField(_l('章节申请'))
+    submit = SubmitField(_l('提交'))
 
     def validate_post(self, post):
         section = Section.query.filter_by(title=self.title.data).first()
         if section is not None:
-            raise ValidationError(_('此章节名已被占用'))
+            raise ValidationError(_('此单元名已被占用'))
 

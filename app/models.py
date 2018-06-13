@@ -12,12 +12,12 @@ from hashlib import md5
 from time import time
 from datetime import datetime, timedelta, timezone
 import jwt
+
 followers = db.Table(
     'followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
-
 class User(UserMixin, db.Model): #用户 ORM注册
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -31,12 +31,16 @@ class User(UserMixin, db.Model): #用户 ORM注册
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     photo = db.Column(db.String(120))
     is_authed = db.Column(db.Boolean, default=False)
-    post = db.relationship('Post', backref='author', lazy='dynamic')
+
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    section = db.relationship('Section', backref='author', lazy='dynamic')
+
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
-        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+            backref=db.backref('followers', lazy='dynamic'), lazy='dynamic') 
+    
     def __repr__(self):
         return '<User {}>'.format(self.username)  
 
@@ -105,10 +109,8 @@ class Post(db.Model): #实验课程 ORM注册
     photo = db.Column(db.String(120), nullable=False)
     is_authed = db.Column(db.Boolean, default=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
-        nullable=False)
-    user = db.relationship('User',
-                           backref=db.backref('posts', lazy='dynamic'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sections = db.relationship('Section', backref='parent', lazy='dynamic')
 
     def __repr__(self):
         return '<Post %r>' % self.title
@@ -132,18 +134,28 @@ class Section(db.Model): #课程章节 ORM注册
     body = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-    photo = db.Column(db.String(120), nullable=False)
-    link = db.Column(db.String(120))
+
+    video = db.Column(db.String(120))
     is_authed = db.Column(db.Boolean, default=False)
 
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'),
-                        nullable=False)
-    post = db.relationship('Post',
-                           backref=db.backref('sections', lazy='dynamic'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
     def __repr__(self):
         return '<Section %r>' % self.title
 
+    def avatar(self, size):
+        if self.video:
+            return "uploads/videos/"+self.video
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+    def set_video(self, video, token=False):
+        if not token:
+            return generate_password_hash(
+                str(self.id)+video.split('.')[0])+'.'+video.split('.')[1]
+        self.video = video
     
 
 

@@ -5,10 +5,10 @@ from werkzeug.urls import url_parse
 from app.admin import bp
 
 from app.admin.forms import LoginForm, RegistrationForm, \
-    ResetPasswordRequestForm, ResetPasswordForm, PostForm,EditProfileForm
+    ResetPasswordRequestForm, ResetPasswordForm, PostForm,EditProfileForm,SectForm
 from app.models import User, Post, Section
 from datetime import datetime
-from ext import db, photos, sphotos
+from ext import db, photos, sphotos, videos
 
 from app.admin.email import send_password_reset_email
 
@@ -249,21 +249,25 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('admin/user.html', user=user)
 
-@bp.route('/courses/<username>')
+@bp.route('/courses/<q_c>/<q_name>')
 @login_required
-def course(username):
+def course(q_c,q_name):
     if current_user.is_adminenticated:
         flash(_('这里不能审核课程!'))
         return redirect(url_for('admin.index'))
-    user = User.query.filter_by(username=username).first_or_404()
+    if int(q_c):
+        post = Post.query.filter_by(title=q_name).first_or_404()
+        return render_template('admin/course.html', posts=[post])
+    user = User.query.filter_by(username=q_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('admin.course', username=user.username,
+
+    next_url = url_for('admin.course', q_c=0,q_name=user.username,
                        page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('admin.course', username=user.username,
+    prev_url = url_for('admin.course', q_c=0, q_name=user.username,
                        page=posts.prev_num) if posts.has_prev else None
     return render_template('admin/course.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
@@ -314,9 +318,9 @@ def edit_profile():
                            form=form)
 
 
-@bp.route('/section', methods=['GET', 'POST'])
+@bp.route('/add_section/<title>', methods=['GET', 'POST'])
 @login_required
-def section():
+def add_section(title):
     if current_user.is_adminenticated:
         return redirect(url_for('admin.admin'))
     if not current_user.real_name:
@@ -325,51 +329,57 @@ def section():
     if not current_user.is_authed:
         flash(_('用户信息审核中, 稍后再试'))
         return redirect(url_for('admin.index'))
-    form = PostForm()
+    post = Post.query.filter_by(title=title).first_or_404()
+    if not current_user == post.author:
+        abort(400)
+    form = SectForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.body.data, author=current_user)
-        form.photo.data.filename = post.set_photo(
-            form.photo.data.filename)
-        filename = sphotos.save(form.photo.data)
-        file_url = sphotos.url(filename)
-        post.set_photo(file_url.split('/')[-1], token=True)
+        sect = Section(title=form.title.data,
+                       body=form.body.data, author=current_user,parent=post)
+        #_file
+        form.video.data.filename = sect.set_video(
+            form.video.data.filename)
+        filename = videos.save(form.video.data)
+        file_url = videos.url(filename)
+        sect.set_video(file_url.split('/')[-1], token=True)
+
         db.session.add(post)
         db.session.commit()
-        flash(_('课程申请已提交'))
+        flash(_('单元添加申请已提交'))
         return redirect(url_for('admin.index'))
-    return render_template('admin/post.html', title=_('添加章节'),
+    return render_template('admin/section.html', title=_('单元添加'),post=post,
                            form=form)
 
 
-@bp.route('/follow/<username>')
-@login_required
-def follow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash(_('User %(username)s not found.', username=username))
-        return redirect(url_for('admin.index'))
-    if user == current_user:
-        flash(_('You cannot follow yourself!'))
-        return redirect(url_for('admin.user', username=username))
-    current_user.follow(user)
-    db.session.commit()
-    flash(_('You are following %(username)s!', username=username))
-    return redirect(url_for('admin.user', username=username))
+# @bp.route('/follow/<username>')
+# @login_required
+# def follow(username):
+#     user = User.query.filter_by(username=username).first()
+#     if user is None:
+#         flash(_('User %(username)s not found.', username=username))
+#         return redirect(url_for('admin.index'))
+#     if user == current_user:
+#         flash(_('You cannot follow yourself!'))
+#         return redirect(url_for('admin.user', username=username))
+#     current_user.follow(user)
+#     db.session.commit()
+#     flash(_('You are following %(username)s!', username=username))
+#     return redirect(url_for('admin.user', username=username))
 
 
-@bp.route('/unfollow/<username>')
-@login_required
-def unfollow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash(_('User %(username)s not found.', username=username))
-        return redirect(url_for('admin.index'))
-    if user == current_user:
-        flash(_('You cannot unfollow yourself!'))
-        return redirect(url_for('admin.user', username=username))
-    current_user.unfollow(user)
-    db.session.commit()
-    flash(_('You are not following %(username)s.', username=username))
-    return redirect(url_for('admin.user', username=username))
+# @bp.route('/unfollow/<username>')
+# @login_required
+# def unfollow(username):
+#     user = User.query.filter_by(username=username).first()
+#     if user is None:
+#         flash(_('User %(username)s not found.', username=username))
+#         return redirect(url_for('admin.index'))
+#     if user == current_user:
+#         flash(_('You cannot unfollow yourself!'))
+#         return redirect(url_for('admin.user', username=username))
+#     current_user.unfollow(user)
+#     db.session.commit()
+#     flash(_('You are not following %(username)s.', username=username))
+#     return redirect(url_for('admin.user', username=username))
 
 
