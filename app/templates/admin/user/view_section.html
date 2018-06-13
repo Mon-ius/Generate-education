@@ -9,9 +9,9 @@
                 {{sect.title|e}}
             </h3>
             <div class="blog-post">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="{{ url_for('static',filename=sect.avatar(64))}} }}"></iframe>
-                </div>
+                <video class="video-js" controls preload="auto"  data-setup="{}">
+                    <source src="{{ url_for('static',filename=sect.avatar(0)) }}" type="video/mp4">
+                </video>
             </div>
         </div>    
         <!-- /.blog-main -->
@@ -36,4 +36,8 @@
             </div>
         </aside>
     </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
 {% endblock %}

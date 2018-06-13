@@ -146,6 +146,7 @@ class Section(db.Model): #课程章节 ORM注册
 
     def avatar(self, size):
         if self.video:
+            print(self.video)
             return "uploads/videos/"+self.video
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(

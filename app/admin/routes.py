@@ -159,9 +159,9 @@ def query(key,value,method):
     if key=='posts':
         post = Post.query.filter_by(title=value).first_or_404()
         post.is_authed = method
-        print(post.is_authed)
+        # print(post.is_authed)
         db.session.commit()
-        print(post.is_authed)
+        # print(post.is_authed)
 
     if key=='sections':
         section = Section.query.filter_by(title=value).first_or_404()
@@ -183,7 +183,7 @@ def delete(username):
     user = User.query.filter_by(username=username).first_or_404()
     db.session.delete(user)
     db.session.commit()
-    print(user.username)
+    # print(user.username)
     flash(_('用户删除成功'))
     return redirect(url_for('admin.users'))
 
@@ -291,7 +291,8 @@ def view_course(title):
 def view_section(course, title):
     post = Post.query.filter_by(title=course).first_or_404()
     sect = Section.query.filter_by(parent=post,title=title).first_or_404()
-    print(sect)
+    # print(url_for('static', filename=sect.avatar(0)))
+    
     return render_template('admin/user/view_section.html', sect=sect,post=post)
 
 
@@ -303,7 +304,7 @@ def edit_course(title):
         return redirect(url_for('admin.index'))
     post = Post.query.filter_by(title=title).first_or_404()
     if not post.author == current_user:
-        print(2333)
+        # print(2333)
         flash(_('你没有权限这么做!'))
     form = PostForm(post.title,post.body)
     if form.validate_on_submit():
